@@ -4,7 +4,7 @@
 
 # 查看结果
 
-http://10.8.2.133:8000/table#id=1193/a814c0402a&datetype=none&hidemenu=1
+http://10.8.2.133:8000/table#id=1193/a814c0402a&datetype=none&hidemenu=1&cache=0
 
 # 部署
 
