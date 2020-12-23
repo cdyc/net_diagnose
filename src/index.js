@@ -1,24 +1,26 @@
-var ping = require("ping");
+let { ip } = require("./ip");
+let { telnet } = require("./telnet");
+// const clc = require("cli-color");
+const lib = require("./lib");
+const cw = require("child_process");
+let error = false;
+const init = async () => {
+  let errIp = await ip(["127.0.0.1", "google.com", "yahoo.com"]);
+  let errTelnet = await telnet([{ host: "127.0.0.1", port: 23 }]);
+  let err = [...errIp, ...errTelnet];
 
-var hosts = ["127.0.0.1", "google.com", "yahoo.com"];
-
-const failInfo = [];
-
-async function ipAnany() {
-  for (let i = 0; i < hosts.length; i++) {
-    let host = hosts[i];
-    let { alive } = await ping.promise.probe(host, {
-      // Timeout in seconds for each ping request.
-      timeout: 3,
-    });
-    let str = `网络诊断中(${i + 1}/${hosts.length}) ${host}:\t${
-      alive ? "通过" : "网络连接失败"
-    }`;
-    console.log(str);
-    if (!alive) {
-      failInfo.push(str);
-    }
+  if (err.length == 0) {
+    console.log("诊断程序运行完毕，系统正常，无错误！");
   }
-}
+  console.log(
+    `\n${lib.now()} 本机(ip:${lib.getIPAdress()})诊断结果如下：\n`,
+    err.join("\n")
+  );
+  error = true;
+};
 
-ipAnany();
+init();
+
+if (error) {
+  cw.exec("pause");
+}

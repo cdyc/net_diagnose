@@ -1,9 +1,10 @@
 {
   "scripts": {
     "start": "node ./src/index.js",
-    "package": "pkg ./src/index.js --targets node14-win-x64"
+    "package": "pkg ./src/index.js --targets node14-win-x64 --output=./dist/nd.exe"
   },
   "dependencies": {
-    "ping": "^0.3.0"
+    "ping": "^0.3.0",
+    "telnet-client": "^1.4.6"
   }
 }
