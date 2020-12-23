@@ -5,6 +5,7 @@
     "pkg": "npm run build && copy .\\config.ini .\\dist"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "ini": "^2.0.0",
     "ping": "^0.3.0",
     "telnet-client": "^1.4.6"

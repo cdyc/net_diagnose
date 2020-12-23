@@ -41,6 +41,9 @@ const getConfig = async () => {
         port: arr[1],
       };
     });
-  return { ping, tel };
+
+  // 需要上传日志
+  let uploadLog = config?.config?.uploadLog || 0;
+  return { ping, tel, uploadLog };
 };
 module.exports = { now, getIPAdress, getConfig };
