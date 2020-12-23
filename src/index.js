@@ -4,9 +4,21 @@ const lib = require("./lib");
 
 const errLog = (...args) => console.log(`\u001b[31m${args.join("")}\u001b[0m`);
 
+// if (["-i", "--install"].includes(arg)) {
+//   windowService.init();
+// }
+
 const init = async () => {
-  let errIp = await ip(["127.0.0.1", "google.com", "yahoo.com"]);
-  let errTelnet = await telnet([{ host: "127.0.0.1", port: 23 }]);
+  let { ping, tel } = await lib.getConfig().catch((e) => {
+    errLog("当前目录下未找到config.ini配置文件，程序即将退出");
+    return { ping: [], tel: [] };
+  });
+  if (ping.length + tel.length == 0) {
+    errLog("请联系管理员添加配置文件");
+    return;
+  }
+  let errIp = await ip(ping);
+  let errTelnet = await telnet(tel);
   let err = [...errIp, ...errTelnet];
 
   if (err.length == 0) {
@@ -17,7 +29,7 @@ const init = async () => {
     `\n${lib.now()} 本机(ip:${lib.getIPAdress()})诊断结果如下：\n`,
     err.join("\n")
   );
-  errLog("\n\n网络诊断出现异常，请联系管理员 6129");
+  errLog("\n\n网络诊断出现异常，请联系管理员。电话：6000");
   console.log("\n按回车键退出...");
   return false;
 };

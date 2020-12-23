@@ -1,3 +1,6 @@
+var fs = require("fs"),
+  ini = require("ini");
+
 function now() {
   const dt = new Date();
   const y = dt.getFullYear();
@@ -27,4 +30,17 @@ function getIPAdress() {
   }
 }
 
-module.exports = { now, getIPAdress };
+// 读取配置文件
+const getConfig = async () => {
+  let config = ini.parse(fs.readFileSync("config.ini", "utf-8"));
+  let ping = config?.ping?.ip || [],
+    tel = (config?.telnet?.ip || []).map((item) => {
+      let arr = item.split(":");
+      return {
+        host: arr[0],
+        port: arr[1],
+      };
+    });
+  return { ping, tel };
+};
+module.exports = { now, getIPAdress, getConfig };

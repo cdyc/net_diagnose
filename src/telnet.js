@@ -9,7 +9,7 @@ async function telOne(param) {
     timeout: 3000,
   };
   await connection.connect(params).catch((error) => {
-    err = `\t服务器${param.host}端口${param.port}连接失败，错误原因：${
+    err = `\t服务器${param.host},端口${param.port},连接失败，错误原因：${
       error.code || "未知错误"
     }`;
   });
